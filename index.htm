@@ -6,7 +6,7 @@
 
 <h2>臺灣本土語言語料庫</h2>
 
-<form>
+<form action="http://34.80.160.234:8001/query_results">
 
 <h5>1. 請點選並核取欲查詢之語言和語料庫：</h5>
 <div>
@@ -50,19 +50,22 @@
 <h5>2. 請於欲查詢之功能輸入：</h5>
 <div class=form-group>
   <label>關鍵詞查詢 (KWIC concordance)</label>
-  <input class=form-control id=keyword placeholder="Enter keyword">
+  <input class=form-control name=kw placeholder="Enter keyword">
 </div>
 <div class=form-group>
   <label>切詞查詢 (bigram)</label>
-  <input class=form-control id=bigram placeholder="Enter bigram">
+  <input class=form-control name=bigram placeholder="Enter bigram">
   <small class="form-text text-muted">(用於閩南語)</small>
 </div>
 <div class=form-group>
-  <label>搭配詞組查詢 (collocation)</label>
-  <input class=form-control id=collocation placeholder="Enter collocation">
-  <small class="form-text text-muted">(用於閩南語)</small>
+  <label>搭配詞組查詢 (collocation)</label><br>
+  <table>
+    <tr><td><input name=w1 placeholder="Enter the first word"></td><td><small class="form-text text-muted">(用於閩南語)</small></td></tr>
+    <tr><td></td><td><input name=w21 placeholder="Enter the second word"></td></tr>
+    <tr><td></td><td><input name=w22 placeholder="Enter the second word"></td></tr>
+    <tr><td></td><td><input name=w23 placeholder="Enter the second word"></td></tr>
+  </table>
 </div>
 
 <input type=submit>
-
 </form>

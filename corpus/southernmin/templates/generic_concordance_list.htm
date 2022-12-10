@@ -1,0 +1,10 @@
+查詢結果共{{output_rows | length}}筆符合：
+<table border=1>
+{% for row in output_rows %}
+<tr>
+    {% for column in row %}
+           <td align=center>{{column}}</td>
+    {% endfor %}
+</tr>
+{% endfor %}
+</table>

@@ -1,4 +1,3 @@
-
 from urllib.request import urlopen
 from urllib.parse import quote
 from xml.etree import ElementTree
@@ -19,7 +18,7 @@ def klokahAPI(d=6, txt="klokah"):
                     url = item.find("url").text
                 except:pass
                 text_chinese_tag_url.append([text, chinese, child.tag, url])
-    return iter(text_chinese_tag_url)
+    return list(iter(text_chinese_tag_url))
 
 from sys import argv
 if __name__ == "__main__":

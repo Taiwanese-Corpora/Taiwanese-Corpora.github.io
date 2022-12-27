@@ -1,7 +1,4 @@
-<style>
-table{white-space:nowrap}
-</style>
-查詢結果共{{output_rows | length}}筆符合：
+查詢結果共{{output_rows | length | add:"-1"}}筆符合：
 <table border=1>
 {% for row in output_rows %}
 <tr>

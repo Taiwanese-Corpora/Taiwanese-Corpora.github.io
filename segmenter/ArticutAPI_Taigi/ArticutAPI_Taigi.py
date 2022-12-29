@@ -7,17 +7,19 @@ from pprint import pprint
 import re
 import tempfile
 
+ArticutTG_path = "ArticutAPI_Taigi/"
+
 class ArticutTG:
     def __init__(self, username="", apikey=""):
         self.articut = Articut(username=username, apikey=apikey)
         self.posPat = re.compile("<[^<]*>([^<]*)</([^<]*)>")
         self.userDefinedDICT = {}
         self.cjkPAT = re.compile('[\u4e00-\u9fff]')
-        self.moeCSV = [[t.replace("\n", "") for t in l.split(",")] for l  in open("./moe_dict/詞目總檔.csv", "r", encoding="utf-8").readlines()]
-        for i in iglob("./moe_dict/*.json"):
+        self.moeCSV = [[t.replace("\n", "") for t in l.split(",")] for l  in open(ArticutTG_path+"moe_dict/詞目總檔.csv", "r", encoding="utf-8").readlines()]
+        for i in iglob(ArticutTG_path+"moe_dict/*.json"):
             self.userDefinedDICT[i.split("/")[-1].replace(".json", "")] = json.load(open("{}".format(i), encoding="utf-8"))
 
-        for i in iglob("./my_dict/*.json"):
+        for i in iglob(ArticutTG_path+"my_dict/*.json"):
             POS = i.split("/")[-1].replace(".json", "")
             if POS in self.userDefinedDICT.keys():
                 pass
@@ -26,7 +28,7 @@ class ArticutTG:
 
         for POS in self.userDefinedDICT.keys():
             try:
-                posLIST = json.load(open("./my_dict/{}.json".format(POS), encoding="utf-8"))
+                posLIST = json.load(open(ArticutTG_path+"my_dict/{}.json".format(POS), encoding="utf-8"))
                 tmpLIST = []
                 for p in posLIST:
                     if re.search(self.cjkPAT, p.strip()):

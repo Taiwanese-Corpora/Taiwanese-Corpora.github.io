@@ -2,8 +2,8 @@ from django.http import HttpResponse
 
 from ArticutAPI_Taigi.ArticutAPI_Taigi import ArticutTG
 
-username = "phonlab.nthu@gmail.com"
-apikey = "IBUYB2Ro*nMe*HWuvmoZnBC+r5FjH3x"
+username = ""
+apikey = ""
 articutTG = ArticutTG(username, apikey)
 
 def home(request):

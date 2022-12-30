@@ -71,7 +71,12 @@ def query_results(request):
             concordance_list+=concordance(kw=w1+w2,sentences=sentences)
         return render(request, 'concordance_list.htm', {'concordance_list': concordance_list})
 
-# Bigram API listens to urls.py request for concordances of two consecutive words (characters).
+# Bigram API listens to urls.py request for concordances of two consecutive words (characters), w1 and w2, in the corpus_file;
+# and again csv.reader the corpus_file, and based on the corpus_file with respective target_column;
+# enlist the sentences constituted by the content (southern-min string) in the target_column;
+# generate all consecutive bigrams from the sentences, to build the bigram_sents dictionary with each bigram as the key, and all sentences list that contain that bigram as the value;
+# enumerate the sentence list in the bigram_sents with the query key w1+w2, and generate the concordance_list constituted by (left_context, w1+w2, right_context);
+# return concordances output rendering to the template of concordance_list.htm。
 from collections import defaultdict
 def bigram_concordance(request,corpus_file,w1,w2):
     if corpus_file == 'liching-all_v3.tsv':target_column_num = 2

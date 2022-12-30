@@ -7,6 +7,8 @@ from utilities import generic_concordancer, concordance
 nan_dir = 'corpora_root_dir/nan/'
 Hakka_dir = 'corpora_root_dir/Hakka/'
 
+# 從 request.GET 接收語料庫檢索表單輸入，再根據所選語料庫檔案 (corpus_file, 以csv.reader讀取)，以及所填檢索項目 (kw/gram/w123)，
+# return render 至 generic_concordance_list 或 concordance_list template。
 from nltk.util import bigrams
 import collections
 def query_results(request):
@@ -69,6 +71,7 @@ def query_results(request):
             concordance_list+=concordance(kw=w1+w2,sentences=sentences)
         return render(request, 'concordance_list.htm', {'concordance_list': concordance_list})
 
+# Bigram API listens to urls.py request for concordances of two consecutive words (characters).
 from collections import defaultdict
 def bigram_concordance(request,corpus_file,w1,w2):
     if corpus_file == 'liching-all_v3.tsv':target_column_num = 2

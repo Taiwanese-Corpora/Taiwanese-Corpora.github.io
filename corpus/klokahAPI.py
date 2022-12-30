@@ -3,6 +3,9 @@ from urllib.request import urlopen
 from urllib.parse import quote
 from xml.etree import ElementTree
 
+# 呼叫族語E樂園API(http://web.klokah.tw/api 說明網頁已撤)根據d=1~43種台灣原住民語言，以及欲查詢的字詞(txt)；
+# 族語E樂園API會先回傳一xml file；
+# 再用 xml.etree.ElementTree.parse，轉成 (text族語, chinese中文翻譯, child.tag來源類別, url對應至族語E樂園的來源網頁) 之 list 回傳。
 def klokahAPI(d=6, txt="klokah"):
     text_chinese_tag_url = [["text", "chinese", "tag", "url"]]
 #   print(txt)

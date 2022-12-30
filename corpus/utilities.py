@@ -1,6 +1,8 @@
 from re import search
 import csv
 
+# 單純 concordance function，輸入欲查上下文之關鍵字 kw，以及所有 sentences；
+# return (上文, kw, 下文) 之 list。
 def concordance(kw,sentences):
     concordance_list = []
     for sentence in sentences:
@@ -9,6 +11,8 @@ def concordance(kw,sentences):
             concordance_list.append([m.group('left'), m.group('kw'), m.group('right')])
     return concordance_list
 
+# 通用型 concordancer，輸入欲查上下文之關鍵字 kw，以及 csv 語料庫格式 row，以及欲檢索之欄位 target_column；
+# return csv 格式的 rows，並於 target_column 前後 insert 上文和下文之欄位資料。
 from nltk.text import ConcordanceIndex
 def generic_concordancer(kw, rows, target_column_num):
     header_row = next(rows)

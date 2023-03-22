@@ -7,8 +7,6 @@ from utilities import generic_concordancer, concordance
 nan_dir = 'corpora_root_dir/nan/'
 Hakka_dir = 'corpora_root_dir/Hakka/'
 
-# 從 request.GET 接收語料庫檢索表單輸入，再根據所選語料庫檔案 (corpus_file, 以csv.reader讀取)，以及所填檢索項目 (kw/gram/w123)，
-# return render 至 generic_concordance_list 或 concordance_list template。
 from nltk.util import bigrams
 import collections
 def query_results(request):
@@ -22,7 +20,10 @@ def query_results(request):
     if corpus_file.isnumeric(): # for 族語
         d = int(corpus_file)
         kw = kw.replace("'","’")
-        text_chinese = klokahAPI(d=corpus_file, txt=kw)
+        try:
+            text_chinese = klokahAPI(d=corpus_file, txt=kw)
+        except:
+            return HttpResponse("抱歉，查無此字...")
         if kw[0] > '一' and kw < '龜':
             target_column_num = 1
         else:
@@ -40,7 +41,8 @@ def query_results(request):
 
 
     else: # for 閩南語
-        if corpus_file == 'liching-all_v3.tsv':target_column_num = 2
+        if corpus_file == 'MOEreadminke147-151.txt':target_column_num = 0
+        elif corpus_file == 'liching-all_v3.tsv':target_column_num = 2
         elif corpus_file == 'u-yan_new.tsv':   target_column_num = 2
         elif corpus_file == "教育部閩南語辭典830650_11000900254_Attach1-19230筆詞義含詞類-斷詞11168_noEvaluation.tsv": target_column_num = 8
         sentences = [row[target_column_num] for row in csv.reader(open(nan_dir+corpus_file), delimiter="\t")]
@@ -71,12 +73,6 @@ def query_results(request):
             concordance_list+=concordance(kw=w1+w2,sentences=sentences)
         return render(request, 'concordance_list.htm', {'concordance_list': concordance_list})
 
-# Bigram API listens to urls.py request for concordances of two consecutive words (characters), w1 and w2, in the corpus_file;
-# and again csv.reader the corpus_file, and based on the corpus_file with respective target_column;
-# enlist the sentences constituted by the content (southern-min string) in the target_column;
-# generate all consecutive bigrams from the sentences, to build the bigram_sents dictionary with each bigram as the key, and all sentences list that contain that bigram as the value;
-# enumerate the sentence list in the bigram_sents with the query key w1+w2, and generate the concordance_list constituted by (left_context, w1+w2, right_context);
-# return concordances output rendering to the template of concordance_list.htm。
 from collections import defaultdict
 def bigram_concordance(request,corpus_file,w1,w2):
     if corpus_file == 'liching-all_v3.tsv':target_column_num = 2

@@ -10,5 +10,5 @@ from django.http import HttpResponse
 def home(request):
     text = request.GET["text"]
     resultDICT = articutTG.parse(text)
-    output = resultDICT["result_segmentation]
-    return HttpResponse(output.replace("/", " ")
+    output = resultDICT["result_segmentation"]
+    return HttpResponse(output.replace("/", " "))
